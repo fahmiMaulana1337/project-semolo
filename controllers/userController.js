@@ -1,6 +1,7 @@
 const { hash, compare, encodeToken } = require('../helpers/helper');
 const { User, Asset, Recipe } = require('../models/index')
 const midtransClient = require('midtrans-client');
+const { sendEmailCheckout } = require('../helpers/send_email');
 
 class UserController {
     static async register(req, response) {
@@ -97,7 +98,6 @@ class UserController {
             response.status(500).json(error)
         }
     }
-
     static async requestAsset(req, response) {
         try {
             const { id } = req.params
@@ -144,58 +144,6 @@ class UserController {
             response.status(500).json(error)
         }
     }
-
-    // static async payment(req, response) {
-
-    //     const id = req.params.id;
-
-    //     const recipe = await Recipe.findOne({
-    //         include: [Asset, User],
-    //         where: {
-    //             id
-    //         }
-    //     })
-
-    //     // console.log(recipe.totalPrice, "<<<<<<<<<<<<<<<<<<<<<")
-    //     // Create Snap API instance
-    //     let snap = new midtransClient.Snap({
-    //         isProduction: false,
-    //         serverKey: 'SB-Mid-server-bg1tvPlGrUr4L7wU4FL-iEhA'
-    //     });
-    //     function getRandomInt(max) {
-    //         return Math.floor(Math.random() * max);
-    //       }          
-
-    //     const random = getRandomInt(20000)
-    //     let parameter = {
-    //         "transaction_details": {
-    //             "order_id": `YOUR-ORDERID-${random}`,
-    //             "gross_amount": recipe.totalPrice
-    //         },
-    //         "credit_card": {
-    //             "secure": true
-    //         },
-    //         "customer_details": {
-    //             "first_name": recipe.User.name,
-    //             "last_name": "",
-    //             "email": recipe.User.email,
-    //             "phone": recipe.User.phoneNumber
-    //         }
-    //     };
-
-    //     try {
-    //         const transaction = await snap.createTransaction(parameter)
-
-    //         let transactionToken = transaction.token;
-    //         response.status(200).json('transactionToken:', transactionToken);
-
-    //     } catch (error) {
-    //         console.log(error)
-    //         response.status(500).json(error)
-    //     }
-
-    // }
-
     static async payment(req, response) {
         try {
             const id = req.params.id
@@ -224,15 +172,18 @@ class UserController {
                     "email": user.email,
                 }
             };
-
             const midtransToken = await snap.createTransaction(parameter)
-
+            let mail= "fahmimaulana1337@gmail.com"
+            sendEmailCheckout(mail);
             response.status(201).json(midtransToken)
 
         } catch (error) {
             console.log(error);
         }
     }
+
+
+
 }
 
 
