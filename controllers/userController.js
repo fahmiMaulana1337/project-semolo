@@ -20,7 +20,7 @@ class UserController {
                 phoneNumber,
                 image
             })
-            response.status(201), json(user)
+            response.status(201).json(user)
         } catch (error) {
             if (error.name === 'Email and Password Required') {
                 response.status(400).json(error.name)
@@ -55,7 +55,7 @@ class UserController {
 
             let access_token = encodeToken({ id: user.id, email: user.email, role: user.role, name: user.name })
 
-            response.status(200).json({ access_token: access_token });
+            response.status(200).json({ access_token: access_token, role:user.role });
 
         } catch (error) {
             console.log(error)

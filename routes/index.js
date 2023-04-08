@@ -7,7 +7,9 @@ const { authentication } = require('../middlewares/auth');
 
 router.post('/register',UserController.register);
 router.post('/login',UserController.login);
-router.use(authentication)
+
+
+router.use(authentication)// ria kabebe kodu login kabbi
 router.post('/asset',UserController.addAsset);// admin 
 router.get('/assets',UserController.getAsset); // nenggu aset
 router.post('/requestAsset/:id',UserController.requestAsset); // user request
