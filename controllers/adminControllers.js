@@ -7,7 +7,7 @@ const { where } = require('sequelize');
 const distribution = require('../models/distribution');
 
 class adminController{
-static async acceptRequest(req, response) {
+    static async acceptRequest(req, response) {
         try {
             const id = req.params.id
 
