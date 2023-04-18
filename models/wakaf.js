@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   wakaf.init({
     name: DataTypes.STRING,
-    gender: DataTypes.ENUM,
+    gender: DataTypes.STRING,
     address: DataTypes.STRING,
-    status: DataTypes.ENUM
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'wakaf',

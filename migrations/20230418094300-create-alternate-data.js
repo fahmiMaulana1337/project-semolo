@@ -9,6 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      ScoringId:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Scorings',
+          key: 'id'
+        }
+      },
       data_value: {
         type: Sequelize.INTEGER
       },

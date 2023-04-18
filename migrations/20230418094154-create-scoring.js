@@ -2,12 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('scorings', {
+    await queryInterface.createTable('Scorings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      AssetId:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Assets',
+          key: 'id'
+        }
       },
       criteria: {
         type: Sequelize.STRING
@@ -32,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('scorings');
+    await queryInterface.dropTable('Scorings');
   }
 };

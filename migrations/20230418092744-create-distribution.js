@@ -2,12 +2,19 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('distributions', {
+    await queryInterface.createTable('Distributions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      WakafId:{
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Wakafs',
+          key: 'id'
+        }
       },
       count: {
         type: Sequelize.INTEGER
@@ -26,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('distributions');
+    await queryInterface.dropTable('Distributions');
   }
 };
