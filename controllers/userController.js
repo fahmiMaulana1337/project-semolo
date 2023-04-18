@@ -181,9 +181,6 @@ class UserController {
             console.log(error);
         }
     }
-
-
-
 }
 
 
