@@ -20,7 +20,7 @@ class UserController {
                 phoneNumber,
                 image
             })
-            response.status(201), json(user)
+            response.status(201).json(user)
         } catch (error) {
             if (error.name === 'Email and Password Required') {
                 response.status(400).json(error.name)
@@ -181,6 +181,7 @@ class UserController {
             console.log(error);
         }
     }
+
 }
 
 
