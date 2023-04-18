@@ -6,7 +6,7 @@ const wakaf = require('../models/wakaf');
 const { where } = require('sequelize');
 const distribution = require('../models/distribution');
 
-class adminController{
+class AdminController{
     static async acceptRequest(req, response) {
         try {
             const id = req.params.id
@@ -117,4 +117,4 @@ class adminController{
     }
 
 }
-module.export = adminController
+module.export = AdminController
