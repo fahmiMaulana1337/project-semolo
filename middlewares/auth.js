@@ -8,7 +8,7 @@ const authentication = async (req, response, next) => {
     const { access_token } = req.headers;
     if (!access_token) {
       throw {
-        name: "InvalidToken",
+        name: "InvalidToken1",
       };
     }
 
@@ -21,7 +21,7 @@ const authentication = async (req, response, next) => {
 
     if (!user) {
       throw {
-        name: "InvalidToken",
+        name: "InvalidToken2",
       };
     }
 
@@ -29,11 +29,9 @@ const authentication = async (req, response, next) => {
     next();
   } catch (err) {
     console.log(err);
-   response.status(401).json(err)
+    response.status(401).json(err);
   }
 };
-
-
 
 // const authorization = async (req, response, next) => {
 //   try {
@@ -48,12 +46,12 @@ const authentication = async (req, response, next) => {
 //         name: "Not Found",
 //       };
 //     }
-    
+
 //       if (req.user.id !== inventory.UserId) {
 //         throw {
 //           name: "Forbidden",
 //         };
-    
+
 //     }
 //     next();
 //   } catch (err) {
@@ -61,11 +59,7 @@ const authentication = async (req, response, next) => {
 //   }
 // };
 
-
-
-
-
 module.exports = {
-  authentication
-//   authorization,
+  authentication,
+  //   authorization,
 };
