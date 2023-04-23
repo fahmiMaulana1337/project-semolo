@@ -1,37 +1,36 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer')
 
 function sendEmail(mail) {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: { user: "fahmiMaulana1337@gmail.com", pass: "jegivrpnmsrbwjtq" },
-  });
-
+    service: 'gmail',
+    auth: { user: 'fahmiMaulana1337@gmail.com', pass: 'jegivrpnmsrbwjtq' },
+  })
   const mailOptions = {
-    from: "mohakbar180199@gmail.com",
+    from: 'mohakbar180199@gmail.com',
     to: `${mail}`,
-    subject: "Test Email",
-    text: "Masok Bos",
-  };
+    subject: 'Test Email',
+    text: 'Masok Bos',
+  }
 
   transporter.sendMail(mailOptions, (err, info) => {
-    if (err) throw err;
-    console.log("Email sent: " + info.response);
-  });
+    if (err) throw err
+    console.log('Email sent: ' + info.response)
+  })
 }
 
 function sendEmailCheckout(mail) {
   const transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
-      user: "mohakbar180199@gmail.com",
-      pass: "asvptevwexakjzny",
+      user: 'mohakbar180199@gmail.com',
+      pass: 'asvptevwexakjzny',
     },
-  });
+  })
 
   const mailOptions = {
-    from: "mohakbar180199@gmail.com",
+    from: 'mohakbar180199@gmail.com',
     to: `${mail}`,
-    subject: "Berhasil Meminjam Buku di PerLib!!!",
+    subject: 'Berhasil Meminjam Buku di PerLib!!!',
     html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
         
@@ -373,12 +372,12 @@ function sendEmailCheckout(mail) {
         </body>
         
         </html>`,
-  };
+  }
 
   transporter.sendMail(mailOptions, (err, info) => {
-    if (err) throw err;
-    console.log("Email sent: " + info.response);
-  });
+    if (err) throw err
+    console.log('Email sent: ' + info.response)
+  })
 }
 
-module.exports = { sendEmail, sendEmailCheckout };
+module.exports = { sendEmail, sendEmailCheckout }

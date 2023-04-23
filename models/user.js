@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,55 +10,59 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Recipe)
+      User.hasMany(models.Asset)
     }
   }
-  User.init({
-    email: {
-      type: DataTypes.STRING,
-      allowNull:false,
-      validate:{
-        notEmpty:{
-          msg: 'Email is required'
+  User.init(
+    {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Email is required',
+          },
+          isEmail: {
+            msg: 'Email format is invalid',
+          },
+          notNull: {
+            msg: 'Email is required',
+          },
         },
-        isEmail:{
-          msg: 'Email format is invalid'
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Password is required',
+          },
+          notNull: {
+            msg: 'Password is required',
+          },
         },
-        notNull:{
-          msg: 'Email is required'
-        }
-      }
+      },
+      name: DataTypes.STRING,
+      phoneNumber: DataTypes.STRING,
+      address: DataTypes.STRING,
+      image: DataTypes.STRING,
+      role: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Role is required',
+          },
+          notNull: {
+            msg: 'Role is required',
+          },
+        },
+      },
     },
-    password:{
-      type: DataTypes.STRING,
-      allowNull:false,
-      validate:{
-        notEmpty:{
-          msg: 'Password is required'
-        },
-        notNull:{
-          msg: 'Password is required'
-        }
-      }
-    },
-    name: DataTypes.STRING,
-    phoneNumber: DataTypes.STRING,
-    address: DataTypes.STRING,
-    image: DataTypes.STRING,
-    role: {
-      type: DataTypes.STRING,
-      allowNull:false,
-      validate:{
-        notEmpty:{
-          msg: 'Role is required'
-        },
-        notNull:{
-          msg: 'Role is required'
-        }
-      }
-    },
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
-  return User;
-};
+    {
+      sequelize,
+      modelName: 'User',
+    }
+  )
+  return User
+}

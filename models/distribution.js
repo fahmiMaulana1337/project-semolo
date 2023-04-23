@@ -1,9 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class distribution extends Model {
+  class Distribution extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,15 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      distribution.belongsTo(models.wakaf)
+      Distribution.belongsTo(models.Wakaf)
     }
   }
-  distribution.init({
-    count: DataTypes.INTEGER,
-    amount: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'distribution',
-  });
-  return distribution;
-};
+  Distribution.init(
+    {
+      count: DataTypes.INTEGER,
+      amount: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Distribution',
+    }
+  )
+  return Distribution
+}

@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class alternate_data extends Model {
     /**
@@ -14,11 +12,14 @@ module.exports = (sequelize, DataTypes) => {
       alternate_data.belongsTo(models.scoring)
     }
   }
-  alternate_data.init({
-    data_value: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'alternate_data',
-  });
-  return alternate_data;
-};
+  alternate_data.init(
+    {
+      data_value: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'alternate_data',
+    }
+  )
+  return alternate_data
+}

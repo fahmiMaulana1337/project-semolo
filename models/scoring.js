@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class scoring extends Model {
     /**
@@ -15,14 +13,17 @@ module.exports = (sequelize, DataTypes) => {
       scoring.belongsTo(models.Asset)
     }
   }
-  scoring.init({
-    criteria: DataTypes.STRING,
-    weight: DataTypes.INTEGER,
-    value: DataTypes.INTEGER,
-    rank: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'scoring',
-  });
-  return scoring;
-};
+  scoring.init(
+    {
+      criteria: DataTypes.STRING,
+      weight: DataTypes.INTEGER,
+      value: DataTypes.INTEGER,
+      rank: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'scoring',
+    }
+  )
+  return scoring
+}
