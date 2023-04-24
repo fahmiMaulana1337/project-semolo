@@ -1,7 +1,7 @@
 'use strict'
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class alternate_data extends Model {
+  class AlternateData extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,17 +9,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      alternate_data.belongsTo(models.scoring)
+      AlternateData.belongsTo(models.Criteria)
     }
   }
-  alternate_data.init(
+  AlternateData.init(
     {
       data_value: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: 'alternate_data',
+      modelName: 'AlternateData',
     }
   )
-  return alternate_data
+  return AlternateData
 }

@@ -1,12 +1,12 @@
-const weight = [90, 80, 85, 75, 60]
-const alternates = [
-  [12, 60, 2, 2, 2],
-  [16, 50, 1, 1, 2],
-  [16, 50, 1, 1, 4],
-  [17, 70, 2, 2, 4],
-]
-const cMax = [25, 100, 2, 2, 4]
-const cMin = [6, 50, 1, 1, 0]
+// const weight = [90, 80, 85, 75, 60]
+// const alternates = [
+//   [12, 60, 2, 2, 2],
+//   [16, 50, 1, 1, 2],
+//   [16, 50, 1, 1, 4],
+//   [17, 70, 2, 2, 4],
+// ]
+// const cMax = [25, 100, 2, 2, 4]
+// const cMin = [6, 50, 1, 1, 0]
 
 //normalisasi bobot
 const calcNormalize = (weight, totalWeight) => {
@@ -39,17 +39,8 @@ const calcFinalValue = (normalizeWeight, utils) => {
   return result
 }
 
-const normalizeResult = calcNormalize(weight, 390)
-const utility = calcUtility(alternates, cMin, cMax)
-
-console.log('NORMALIZE WEIGHT >>>>>>>>>>>>', calcNormalize(weight, 390))
-
-console.log(
-  'UTILITY RESULT >>>>>>>>>>>>>>>>>>>',
-  calcUtility(alternates, cMin, cMax)
-)
-
-console.log(
-  'FINAL RESULT >>>>>>>>>>>>>> ',
-  calcFinalValue(normalizeResult, utility)
-)
+module.exports = {
+  calcNormalize,
+  calcUtility,
+  calcFinalValue,
+}

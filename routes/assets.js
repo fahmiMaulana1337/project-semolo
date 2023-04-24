@@ -12,7 +12,7 @@ assetsRouter.use(authentication)
 
 assetsRouter.post('/', upload.single('image'), AssetControllers.registerAsset)
 assetsRouter.get('/', AssetControllers.getAllAsset)
-assetsRouter.get('/user', AssetControllers.getUserAsset)
+assetsRouter.get('/user', AssetControllers.getUserAsset) //req from headers
 assetsRouter.post('/request/:id', AssetControllers.requestAsset)
 
 assetsRouter.use(verifyRole)

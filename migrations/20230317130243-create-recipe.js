@@ -2,47 +2,47 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Recipes', {
+    await queryInterface.createTable('recipes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      UserId: {
+      user_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
+          model: 'users',
           key: 'id',
         },
       },
-      AssetId: {
+      asset_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Assets',
+          model: 'assets',
           key: 'id',
         },
       },
-      totalPrice: {
+      total_price: {
         type: Sequelize.INTEGER,
       },
       deadline: {
         type: Sequelize.DATE,
       },
-      isActive: {
+      is_active: {
         type: Sequelize.STRING,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Recipes')
+    await queryInterface.dropTable('recipes')
   },
 }

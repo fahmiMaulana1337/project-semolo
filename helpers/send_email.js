@@ -3,7 +3,10 @@ const nodemailer = require('nodemailer')
 function sendEmail(mail) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
-    auth: { user: 'fahmiMaulana1337@gmail.com', pass: 'jegivrpnmsrbwjtq' },
+    auth: {
+      user: 'fahmiMaulana1337@gmail.com',
+      pass: 'jegivrpnmsrbwjtq',
+    },
   })
   const mailOptions = {
     from: 'mohakbar180199@gmail.com',
@@ -23,13 +26,15 @@ function sendEmailCheckout(mail) {
     service: 'gmail',
     auth: {
       user: 'mohakbar180199@gmail.com',
-      pass: 'asvptevwexakjzny',
+      pass: 'sqewbahqmfqwtihm',
     },
   })
 
+  console.log('1 MAIL==>', mail)
+
   const mailOptions = {
     from: 'mohakbar180199@gmail.com',
-    to: `${mail}`,
+    to: mail,
     subject: 'Berhasil Meminjam Buku di PerLib!!!',
     html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">

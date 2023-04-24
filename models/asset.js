@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Asset.hasMany(models.Recipe)
-      Asset.hasMany(models.scoring)
+      Asset.hasMany(models.Criteria)
       Asset.belongsTo(models.User)
     }
   }

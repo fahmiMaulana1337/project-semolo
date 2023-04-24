@@ -2,17 +2,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Distributions', {
+    await queryInterface.createTable('distributions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      WakafId: {
+      wakaf_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Wakafs',
+          model: 'wakafs',
           key: 'id',
         },
       },
@@ -22,17 +22,17 @@ module.exports = {
       amount: {
         type: Sequelize.INTEGER,
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
     })
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Distributions')
+    await queryInterface.dropTable('distributions')
   },
 }

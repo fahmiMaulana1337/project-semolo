@@ -15,7 +15,7 @@ wakafRouter.use(verifyRole)
 wakafRouter.post('/', WakafControllers.registerWakaf)
 wakafRouter.get('/', WakafControllers.getAllWakaf)
 wakafRouter.get('/:id', WakafControllers.getWakafById)
-wakafRouter.post('/update/:id', WakafControllers.updateWakaf)
+wakafRouter.put('/:id', WakafControllers.updateWakaf)
 // wakafRouter.patch('/update-fund', WakafControllers.updateFund)
 
 router.use('/admin/wakafs', wakafRouter)
