@@ -1,6 +1,6 @@
 const { decodeToken, formatSize, formatType } = require('../middlewares/auth')
 const { successResponse, errResponse } = require('../helpers/response')
-const { User, Wakaf, Recipe } = require('../models/index')
+const { Wakaf, Distribution } = require('../models/index')
 
 class WakafControllers {
   static async registerWakaf(req, res) {
@@ -21,8 +21,25 @@ class WakafControllers {
         status: 'aktif',
       })
 
-      return successResponse(201, newWakaf, 'Successfully register wakaf', res)
+      const distributions = await Distribution.create({
+        WakafId: newWakaf.id,
+        amount: 300000,
+      })
+
+      return successResponse(
+        201,
+        {
+          id: distributions.id,
+          name: newWakaf.name,
+          gender: newWakaf.gender,
+          address: newWakaf.address,
+          amount: distributions.amount,
+        },
+        'Successfully register wakaf',
+        res
+      )
     } catch (error) {
+      console.log(error)
       return errResponse(500, error, res)
     }
   }

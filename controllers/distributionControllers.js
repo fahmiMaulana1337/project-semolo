@@ -21,9 +21,11 @@ class DistributionControllers {
     }
   }
 
-  static async setDistribution(req, res) {
+  static async addDistribution(req, res) {
     try {
       const { WakafId, obtained_at } = req.params
+
+      console.log(req.params)
 
       if (!obtained_at || !WakafId) {
         return errResponse(400, 'All params cannot be null', res)
@@ -35,7 +37,7 @@ class DistributionControllers {
           WakafId,
         },
       })
-      console.log(getDistribution)
+      console.log(getDistribution, '<<<<<')
       if (!getDistribution) {
         return errResponse(404, 'Distribution not found', res)
       }
@@ -66,7 +68,7 @@ class DistributionControllers {
         200,
         {
           count: getDistribution.count,
-          amount: getFund.capital,
+          'sisa total dana': getFund.capital,
         },
         'Successfully updated distribution ',
         res

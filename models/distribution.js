@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Distribution.init(
     {
+      WakafId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Wakafs',
+          key: 'id',
+        },
+      },
       count: DataTypes.INTEGER,
       amount: DataTypes.INTEGER,
     },

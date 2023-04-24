@@ -3,8 +3,6 @@ const router = express.Router()
 const DistributionControllers = require('../controllers/distributionControllers')
 const { authentication } = require('../middlewares/auth')
 const { verifyRole } = require('../middlewares/authRole')
-const multer = require('multer')
-const upload = multer({ storage: multer.memoryStorage() })
 const distributionRouter = express.Router()
 
 distributionRouter.use(authentication)
@@ -12,9 +10,9 @@ distributionRouter.use(verifyRole)
 //endpoint
 
 distributionRouter.post('/', DistributionControllers.registerFund)
-distributionRouter.get(
+distributionRouter.put(
   '/:WakafId/:obtained_at',
-  DistributionControllers.setDistribution
+  DistributionControllers.addDistribution
 )
 
 router.use('/admin/distributions', distributionRouter)
