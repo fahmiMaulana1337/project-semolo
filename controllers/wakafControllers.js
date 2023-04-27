@@ -1,16 +1,15 @@
 const { decodeToken, formatSize, formatType } = require('../middlewares/auth')
 const { successResponse, errResponse } = require('../helpers/response')
-const { Wakaf, Distribution } = require('../models/index')
+const { Wakaf, Fund } = require('../models/index')
 
 class WakafControllers {
   static async registerWakaf(req, res) {
     try {
-      const { name, gender, address } = req.body
+      const { name, gender, address, nowYear, amount, fund_id } = req.body
 
-      console.log(req.body, '<<<<<<<<<<<<<<<')
-
+      console.log('1. 1. MASOKOKOKOKO===>', req.body)
       //input file from client
-      if (!name || !gender || !address) {
+      if (!name || !gender || !address || !nowYear || !amount || !fund_id) {
         return errResponse(400, 'All input cannot be null', res)
       }
 
@@ -18,22 +17,21 @@ class WakafControllers {
         name,
         gender,
         address,
-        status: 'aktif',
-      })
-
-      const distributions = await Distribution.create({
-        WakafId: newWakaf.id,
-        amount: 300000,
+        is_active: 'aktif',
+        amount,
+        fund_id,
       })
 
       return successResponse(
         201,
         {
-          id: distributions.id,
+          id: newWakaf.id,
           name: newWakaf.name,
           gender: newWakaf.gender,
           address: newWakaf.address,
-          amount: distributions.amount,
+          amount: newWakaf.amount,
+          is_active: newWakaf.is_active,
+          status: newWakaf.status,
         },
         'Successfully register wakaf',
         res
@@ -46,7 +44,9 @@ class WakafControllers {
 
   static async getAllWakaf(req, response) {
     try {
-      const wakafDatas = await Wakaf.findAll()
+      const wakafDatas = await Wakaf.findAll({
+        include: Fund,
+      })
       return successResponse(
         200,
         wakafDatas,
@@ -95,37 +95,29 @@ class WakafControllers {
   static async updateWakaf(req, res) {
     try {
       const { id } = req.params
-      const { name, gender, address, status } = req.body
+      const { name, gender, address } = req.body
 
       if (!id) {
         return errResponse(400, 'parameter id cannot be null or undefined', res)
       }
-
-      if (!name || !gender || !address || !status) {
+      if (!name || !gender || !address) {
         return errResponse(400, 'All input cannot be null', res)
       }
 
-      const updateWakaf = await Wakaf.findByPk(id)
-
-      if (!updateWakaf) {
+      //update wakaf
+      const wakafs = await Wakaf.findByPk(id)
+      if (!wakafs) {
         return errResponse(404, 'ID Wakaf not found', res)
       }
 
-      //update wakaf
+      wakafs.name = name
+      wakafs.gender = gender``
+      wakafs.address = address
+      // wakafs.status = status
+      wakafs.updateAt = new Date()
+      wakafs.save(id)
 
-      updateWakaf.name = name
-      updateWakaf.gender = gender
-      updateWakaf.address = address
-      updateWakaf.status = status
-      updateWakaf.updateAt = new Date()
-      updateWakaf.save(id)
-
-      return successResponse(
-        200,
-        updateWakaf.toJSON(),
-        'Successfully update wakaf data',
-        res
-      )
+      return successResponse(200, wakafs, 'Successfully update wakaf data', res)
     } catch (error) {
       console.log(error)
       return errResponse(500, error, res)

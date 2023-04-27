@@ -9,19 +9,30 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Wakaf.hasMany(models.Distribution)
+      Wakaf.belongsTo(models.Fund, { foreignKey: 'fund_id' })
     }
   }
   Wakaf.init(
     {
+      fund_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'funds',
+          key: 'id',
+        },
+      },
       name: DataTypes.STRING,
       gender: DataTypes.STRING,
       address: DataTypes.STRING,
-      status: DataTypes.STRING,
+      is_active: DataTypes.STRING,
+      amount: DataTypes.INTEGER,
+      status: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: 'Wakaf',
+      tableName: 'wakafs',
+      underscored: true,
     }
   )
   return Wakaf

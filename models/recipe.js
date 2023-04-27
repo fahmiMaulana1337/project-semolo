@@ -15,27 +15,25 @@ module.exports = (sequelize, DataTypes) => {
   }
   Recipe.init(
     {
-      UserId: {
+      user_id: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Users',
+          model: 'users',
           key: 'id',
         },
       },
-      AssetId: {
+      asset_id: {
         type: DataTypes.INTEGER,
-        references: {
-          model: 'Assets',
-          key: 'id',
-        },
       },
-      totalPrice: DataTypes.INTEGER,
+      total_price: DataTypes.INTEGER,
       deadline: DataTypes.DATE,
-      isActive: DataTypes.STRING,
+      is_active: DataTypes.STRING,
     },
     {
       sequelize,
       modelName: 'Recipe',
+      tableName: 'recipes',
+      underscored: true,
     }
   )
   return Recipe

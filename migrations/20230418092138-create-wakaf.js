@@ -9,6 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      fund_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'funds',
+          key: 'id',
+        },
+      },
       name: {
         type: Sequelize.STRING,
       },
@@ -18,8 +25,14 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
       },
-      status: {
+      is_active: {
         type: Sequelize.STRING,
+      },
+      amount: {
+        type: Sequelize.INTEGER,
+      },
+      status: {
+        type: Sequelize.INTEGER,
       },
       created_at: {
         allowNull: false,

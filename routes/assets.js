@@ -10,6 +10,7 @@ const assetsRouter = express.Router()
 //endpoint
 assetsRouter.use(authentication)
 
+
 assetsRouter.post('/', upload.single('image'), AssetControllers.registerAsset)
 assetsRouter.get('/', AssetControllers.getAllAsset)
 assetsRouter.get('/user', AssetControllers.getUserAsset) //req from headers

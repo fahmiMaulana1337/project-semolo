@@ -21,10 +21,19 @@ module.exports = (sequelize, DataTypes) => {
       price: DataTypes.INTEGER,
       image: DataTypes.STRING,
       rate: DataTypes.INTEGER,
+      user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'users',
+          key:'id'
+        }
+      },
     },
     {
       sequelize,
       modelName: 'Asset',
+      tableName: 'assets',
+      underscored: true,
     }
   )
   return Asset

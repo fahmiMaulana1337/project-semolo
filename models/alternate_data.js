@@ -14,11 +14,27 @@ module.exports = (sequelize, DataTypes) => {
   }
   AlternateData.init(
     {
+      asset_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'assets',
+          key: 'id',
+        },
+      },
+      criteria_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'criterias',
+          key: 'id',
+        },
+      },
       data_value: DataTypes.INTEGER,
     },
     {
       sequelize,
       modelName: 'AlternateData',
+      tableName: 'alternate_datas',
+      underscored: true,
     }
   )
   return AlternateData

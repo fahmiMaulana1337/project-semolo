@@ -6,19 +6,14 @@ class AssetControllers {
   static async registerAsset(req, res) {
     try {
       //decode token and get id
-      let access_token = req.headers
-      const decoded = decodeToken(access_token.access_token)
-      const getId = decoded.id
+
+      console.log(req.user, '<<<<<<<<<<<<')
 
       //input file from outside
       const { name, address, price } = req.body
       const image = req.file
 
       //query find user byprimary key
-      const getUser = User.findByPk(getId)
-      if (!getUser) {
-        return errResponse(404, 'User not found', res)
-      }
 
       if (!name || !address || !price || !image) {
         return errResponse(400, 'All input cannot be null', res)
@@ -36,19 +31,20 @@ class AssetControllers {
 
       const imageAdd = image.originalname
       const inputAssets = {
-        UserId: getId,
+        user_id: req.user.id,
         name: name,
         address: address,
         price: price,
         image: imageAdd,
         rank: 0,
       }
-
+      console.log(inputAssets);
       //register asset
       await Asset.create(inputAssets)
 
       return successResponse(201, inputAssets, 'Succesfully add assets', res)
     } catch (error) {
+      console.log(error)
       if (error.name === 'required') {
         return errResponse(400, error, res)
       }
@@ -58,7 +54,9 @@ class AssetControllers {
 
   static async getAllAsset(req, response) {
     try {
-      const assets = await Asset.findAll()
+      const assets = await Asset.findAll({
+        include: User,
+      })
       return successResponse(200, assets, 'Successfully get datas', response)
     } catch (error) {
       return errResponse(500, error, response)
@@ -81,7 +79,7 @@ class AssetControllers {
         return errResponse(400, 'User not found')
       }
 
-      if (getAsset.data === null) {
+      if (getAsset.length === 0) {
         return errResponse(400, 'User dont have asset', response)
       }
 
@@ -124,10 +122,10 @@ class AssetControllers {
       }
 
       const newReqAsset = await Recipe.create({
-        UserId: req.user.id,
-        AssetId: id,
-        isActive: 'waiting',
-        totalPrice: asset.price,
+        user_id: req.user.id,
+        asset_id: id,
+        is_active: 'waiting',
+        total_price: asset.price,
       })
 
       return successResponse(
@@ -148,9 +146,11 @@ class AssetControllers {
       const asset = await Recipe.findAll({
         // include: [User, Asset],
         where: {
-          isActive: 'waiting',
+          is_active: 'waiting',
         },
       })
+
+      console.log('ASSETTT', asset)
 
       if (!asset[0]) {
         return errResponse(404, 'Asset not found', response)
@@ -174,20 +174,20 @@ class AssetControllers {
       const deadline = new Date(now.getFullYear(), now.getMonth() + 1, 1)
       const getAsset = await Recipe.findOne({
         where: {
-          AssetId: id,
+          asset_id: id,
         },
       })
 
       if (!getAsset) {
-        return errResponse(400, 'Asset ID not found', response)
-      } else if (getAsset.isActive === 'true') {
-        return errResponse(400, 'Asset already accepted', response)
-      } else if (getAsset.isActive === 'false') {
-        return errResponse(400, 'Asset already rejected', response)
+        return errResponse(404, 'Asset ID not found', response)
+      } else if (getAsset.is_active === 'true') {
+        return errResponse(200, 'Asset already accepted', response)
+      } else if (getAsset.is_active === 'false') {
+        return errResponse(200, 'Asset already rejected', response)
       }
 
       //udpate
-      getAsset.isActive = true
+      getAsset.is_active = true
       getAsset.deadline = deadline
       await getAsset.save()
 

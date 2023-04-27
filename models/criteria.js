@@ -16,10 +16,14 @@ module.exports = (sequelize, DataTypes) => {
   Criteria.init(
     {
       name: DataTypes.STRING,
+      weight: DataTypes.INTEGER,
+      normalize: DataTypes.DOUBLE,
     },
     {
       sequelize,
       modelName: 'Criteria',
+      tableName: 'criterias',
+      underscored: true,
     }
   )
   return Criteria

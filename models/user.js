@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       name: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
+      phone_number: DataTypes.STRING,
       address: DataTypes.STRING,
       image: DataTypes.STRING,
       role: {
@@ -62,6 +62,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'User',
+      tableName: 'users',
+      underscored: true,
     }
   )
   return User

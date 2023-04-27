@@ -16,12 +16,11 @@ class PaymentControllers {
       }
 
       const recipe = await Recipe.findOne({
-        include: [Asset, User],
         where: {
-          UserId: id,
+          user_id: id,
         },
       })
-
+      console.log('Recipe<<<<<<<<<<<<<<<', recipe)
       if (!recipe) {
         return errResponse(404, 'Recipe not found', res)
       }
@@ -35,7 +34,9 @@ class PaymentControllers {
 
       const orderId =
         'YOUR-ORDERID' + Math.floor(100000 + Math.random() * 9000000)
-      const grossAmount = recipe.totalPrice
+      const grossAmount = recipe.total_price
+
+      console.log('AMOUNT>>>>>>>>>>>>>>>>>', grossAmount)
 
       let parameter = {
         transaction_details: {
@@ -57,7 +58,7 @@ class PaymentControllers {
       console.log('SEND EMAIL', sendEmail)
       return successResponse(201, midtransToken, 'Succesfully transcation', res)
     } catch (error) {
-      console.log(error)
+      console.info(error)
       return errResponse(500, error, res)
     }
   }
