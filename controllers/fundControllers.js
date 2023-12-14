@@ -1,4 +1,4 @@
-const { Wakaf, Fund } = require('../models/index')
+  const { Wakaf, Fund } = require('../models/index')
 const { errResponse, successResponse } = require('../helpers/response')
 const { Op, ValidationErrorItemType } = require('sequelize')
 
@@ -65,7 +65,7 @@ class FundControllers {
         return errResponse(400, 'All params cannot be null', res)
       }
 
-      //input file from client
+      
       const getFund = await Fund.findOne({
         where: {
           obtained_at: obtained_at,

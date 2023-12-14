@@ -5,19 +5,18 @@ const { authentication } = require('../middlewares/auth')
 const { verifyRole } = require('../middlewares/authRole')
 const multer = require('multer')
 const upload = multer({ storage: multer.memoryStorage() })
-const wakafRouter = express.Router()
+// const router = express.Router()
 
 //auth
-wakafRouter.use(authentication)
-wakafRouter.use(verifyRole)
+router.use(authentication)
+router.use(verifyRole)
 
 //ADMIN
-wakafRouter.post('/', WakafControllers.registerWakaf)
-wakafRouter.get('/', WakafControllers.getAllWakaf)
-wakafRouter.get('/:id', WakafControllers.getWakafById)
-wakafRouter.put('/:id', WakafControllers.updateWakaf)
-// wakafRouter.patch('/update-fund', WakafControllers.updateFund)
+router.post('/', WakafControllers.registerWakaf)
+router.get('/', WakafControllers.getAllWakaf)
+router.get('/:id', WakafControllers.getWakafById)
+router.put('/:id', WakafControllers.updateWakaf)
+// router.patch('/update-fund', WakafControllers.updateFund)
 
-router.use('/admin/wakafs', wakafRouter)
 
 module.exports = router

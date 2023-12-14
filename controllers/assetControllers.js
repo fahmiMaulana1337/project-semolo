@@ -1,14 +1,25 @@
 const { decodeToken, formatSize, formatType } = require('../helpers/helper')
 const { successResponse, errResponse } = require('../helpers/response')
-const { User, Asset, Recipe } = require('../models/index')
+const { User, Asset, Recipe } = require('../models')
 
 class AssetControllers {
+  static async detailAsset(req, response) {
+    try {
+      const id = req.params.id
+      const data = await Asset.findOne({
+        where: {
+          id,
+        },
+      })
+      response.status(200).json(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   static async registerAsset(req, res) {
     try {
       //decode token and get id
-
-      console.log(req.user, '<<<<<<<<<<<<')
-
+      const user_id = req.user.id
       //input file from outside
       const { name, address, price } = req.body
       const image = req.file
@@ -20,7 +31,6 @@ class AssetControllers {
       }
 
       const fileType = formatType(image)
-      console.log(fileType)
       if (fileType) {
         return errResponse(400, fileType, res)
       }
@@ -31,14 +41,13 @@ class AssetControllers {
 
       const imageAdd = image.originalname
       const inputAssets = {
-        user_id: req.user.id,
+        user_id: user_id,
         name: name,
         address: address,
         price: price,
         image: imageAdd,
         rank: 0,
       }
-      console.log(inputAssets);
       //register asset
       await Asset.create(inputAssets)
 
@@ -148,9 +157,7 @@ class AssetControllers {
         where: {
           is_active: 'waiting',
         },
-      })
-
-      console.log('ASSETTT', asset)
+      }) 
 
       if (!asset[0]) {
         return errResponse(404, 'Asset not found', response)
@@ -203,5 +210,6 @@ class AssetControllers {
     }
   }
 }
+
 
 module.exports = AssetControllers

@@ -11,23 +11,26 @@ const { successResponse, errResponse } = require('../helpers/response')
 class AuthControllers {
   //register user
   static async register(req, res) {
+    console.log(req.body)
     try {
       const { email, password, name, role, address, phoneNumber } = req.body
 
+      console.log(email, password, name, role, address, phoneNumber,'form>>>>>>>>>>>>>');
+
       const image = req.file
 
-      if (!email || !password || !image) {
+      if (!email || !password) {
         return errResponse(400, 'email password and image must be fields', res)
       }
 
-      const fileType = formatType(image)
-      if (fileType) {
-        return errResponse(400, fileType, res)
-      }
-      const fileSize = formatSize(image)
-      if (fileSize) {
-        return errResponse(400, fileSize, res)
-      }
+      // const fileType = formatType(image)
+      // if (fileType) {
+      //   return errResponse(400, fileType, res)
+      // }
+      // const fileSize = formatSize(image)
+      // if (fileSize) {
+      //   return errResponse(400, fileSize, res)
+      // }
       const getUser = await User.findOne({
         where: { email: email },
       })
@@ -37,7 +40,7 @@ class AuthControllers {
       }
 
       const hashPassword = hash(password)
-      const uploadImage = image.originalname
+      // const uploadImage = image.originalname
 
       const createUser = {
         email: email,
@@ -45,8 +48,8 @@ class AuthControllers {
         role: role,
         name: name,
         address: address,
-        phoneNumber: phoneNumber,
-        image: uploadImage,
+        phoneNumber: phoneNumber
+        // image: uploadImage,
       }
 
       await User.create(createUser)
@@ -91,10 +94,14 @@ class AuthControllers {
         role: user.role,
         name: user.name,
       })
-      console.log(access_token);
+
       return successResponse(
         202,
-        { access_token: access_token,role:user.role },
+        {
+          access_token: access_token,
+          role: user.role,
+          user_id: user.id,
+        },
         'Succesfully login',
         response
       )

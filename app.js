@@ -8,6 +8,7 @@ const assets = require('./routes/assets')
 const wakaf = require('./routes/wakafs')
 const payments = require('./routes/payments')
 const funds = require('./routes/funds')
+const router = require('./routes/index')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -18,7 +19,8 @@ app.use(cors())
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
-app.use(auth, assets, wakaf, funds, payments)
+// app.use(auth, assets, wakaf, funds, payments)
+app.use(router)
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -8,8 +8,9 @@ dotenv.config()
 class PaymentControllers {
   static async payment(req, res) {
     try {
-      const id = req.params.id
-      const user = await User.findByPk(req.user.id)
+      const { id } = req.body
+      console.log(id, 'body>>>>>>>>>>>>')
+      const user = await User.findByPk(id)
 
       if (!user) {
         return errResponse(404, 'Not Authorized', res)
@@ -20,7 +21,16 @@ class PaymentControllers {
           user_id: id,
         },
       })
-      console.log('Recipe<<<<<<<<<<<<<<<', recipe)
+
+      //query assett
+      const asset = await Asset.findOne({
+        where: {
+          id: recipe.asset_id,
+        },
+      })
+
+      console.log(asset.address, '<><><><><>><><><><><><><><><')
+
       if (!recipe) {
         return errResponse(404, 'Recipe not found', res)
       }
@@ -36,8 +46,7 @@ class PaymentControllers {
         'YOUR-ORDERID' + Math.floor(100000 + Math.random() * 9000000)
       const grossAmount = recipe.total_price
 
-      console.log('AMOUNT>>>>>>>>>>>>>>>>>', grossAmount)
-
+      
       let parameter = {
         transaction_details: {
           order_id: orderId,
@@ -50,12 +59,13 @@ class PaymentControllers {
           email: user.email,
         },
       }
-
+      
+      // console.log('AMOUNT>>>>>>>>>>>>>>>>>', parameter.transaction_details.order_id)
       const midtransToken = await snap.createTransaction(parameter)
-      const mail = 'fahmiMaulana1337@gmail.com'
+      // console.log('>>>>>>>>>>>>>>>>>..',midtransToken.redirect_url)
+      const mail = 'akunguardian2023.1@gmail.com'
       console.log('INI MAIL==>', mail)
-      const sendEmail = sendEmailCheckout(mail)
-      console.log('SEND EMAIL', sendEmail)
+      const sendEmail = sendEmailCheckout(mail, asset, recipe, user, parameter,midtransToken)
       return successResponse(201, midtransToken, 'Succesfully transcation', res)
     } catch (error) {
       console.info(error)

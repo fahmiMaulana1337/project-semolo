@@ -32,17 +32,17 @@ class WakafControllers {
           amount: newWakaf.amount,
           is_active: newWakaf.is_active,
           status: newWakaf.status,
-        },
+        },  
         'Successfully register wakaf',
         res
       )
     } catch (error) {
       console.log(error)
-      return errResponse(500, error, res)
+      return errResponse(500, error.name, res)
     }
   }
 
-  static async getAllWakaf(req, response) {
+  static async getAllWakaf(req, response) {       
     try {
       const wakafDatas = await Wakaf.findAll({
         include: Fund,
@@ -102,8 +102,7 @@ class WakafControllers {
       }
       if (!name || !gender || !address) {
         return errResponse(400, 'All input cannot be null', res)
-      }
-
+      } 
       //update wakaf
       const wakafs = await Wakaf.findByPk(id)
       if (!wakafs) {
@@ -111,7 +110,7 @@ class WakafControllers {
       }
 
       wakafs.name = name
-      wakafs.gender = gender``
+      wakafs.gender = gender
       wakafs.address = address
       // wakafs.status = status
       wakafs.updateAt = new Date()

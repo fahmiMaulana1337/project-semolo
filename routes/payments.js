@@ -3,13 +3,11 @@ const router = express.Router()
 const PaymentControllers = require('../controllers/paymentControllers')
 const { authentication } = require('../middlewares/auth')
 const { verifyRole } = require('../middlewares/authRole')
-const paymentsRouter = express.Router()
+// const paymentsRouter = express.Router()
 
 //endpoint
-paymentsRouter.use(authentication)
+router.use(authentication)
 
-paymentsRouter.post('/:id', PaymentControllers.payment)
-
-router.use('/payments', paymentsRouter)
+router.post('/', PaymentControllers.payment)
 
 module.exports = router
