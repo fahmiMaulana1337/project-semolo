@@ -1,7 +1,14 @@
 const nodemailer = require('nodemailer')
 const PaymentControllers = require('../controllers/paymentControllers')
 
-function sendEmailCheckout(mail, asset, recipe, user, parameter, midtransToken) {
+function sendEmailCheckout(
+  mail,
+  asset,
+  recipe,
+  user,
+  parameter,
+  midtransToken
+) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
