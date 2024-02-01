@@ -11,7 +11,7 @@ class AssetControllers {
           id,
         },
       })
-      response.status(200).json(data)
+      return successResponse(200, data, 'Success get asset', response)
     } catch (error) {
       console.log(error)
     }
@@ -76,15 +76,15 @@ class AssetControllers {
     try {
       //decode token and get id
       let access_token = req.headers
-      const decoded = decodeToken(access_token.access_token)
-      const getId = decoded.id
+      let id = req.params.id
 
       const getAsset = await Asset.findAll({
+        include: Recipe,
         where: {
-          UserId: getId,
+          UserId: id,
         },
       })
-      if (!getAsset || !getId) {
+      if (!getAsset || !id) {
         return errResponse(400, 'User not found')
       }
 
@@ -157,7 +157,7 @@ class AssetControllers {
         where: {
           is_active: 'waiting',
         },
-      }) 
+      })
 
       if (!asset[0]) {
         return errResponse(404, 'Asset not found', response)
@@ -210,6 +210,5 @@ class AssetControllers {
     }
   }
 }
-
 
 module.exports = AssetControllers

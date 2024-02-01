@@ -17,8 +17,6 @@ function sendEmailCheckout(
     },
   })
 
-  console.log('1 MAIL==>', mail)
-
   const mailOptions = {
     from: 'mohakbar180199@gmail.com',
     to: mail,

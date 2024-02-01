@@ -12,7 +12,7 @@ router.use(authentication)
 
 router.post('/', upload.single('image'), AssetControllers.registerAsset)
 router.get('/', AssetControllers.getAllAsset)
-router.get('/user', AssetControllers.getUserAsset) //req from headers
+router.get('/user/:id', AssetControllers.getUserAsset) //req from headers
 router.get('/:id', AssetControllers.detailAsset) //req from params
 router.post('/request/:id', AssetControllers.requestAsset)
 

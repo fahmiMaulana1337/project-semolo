@@ -11,11 +11,8 @@ const { successResponse, errResponse } = require('../helpers/response')
 class AuthControllers {
   //register user
   static async register(req, res) {
-    console.log(req.body)
     try {
       const { email, password, name, role, address, phoneNumber } = req.body
-
-      console.log(email, password, name, role, address, phoneNumber,'form>>>>>>>>>>>>>');
 
       const image = req.file
 
@@ -23,14 +20,20 @@ class AuthControllers {
         return errResponse(400, 'email password and image must be fields', res)
       }
 
-      // const fileType = formatType(image)
-      // if (fileType) {
-      //   return errResponse(400, fileType, res)
-      // }
-      // const fileSize = formatSize(image)
-      // if (fileSize) {
-      //   return errResponse(400, fileSize, res)
-      // }
+      if (!image) {
+        return errResponse(400, 'img input cannot be null', res)
+      }
+
+      const fileType = formatType(image)
+      if (fileType) {
+        return errResponse(400, fileType, res)
+      }
+      const fileSize = formatSize(image)
+      if (fileSize) {
+        return errResponse(400, fileSize, res)
+      }
+
+      const imageAdd = image.originalname
       const getUser = await User.findOne({
         where: { email: email },
       })
@@ -48,8 +51,8 @@ class AuthControllers {
         role: role,
         name: name,
         address: address,
-        phoneNumber: phoneNumber
-        // image: uploadImage,
+        phoneNumber: phoneNumber,
+        image: imageAdd,
       }
 
       await User.create(createUser)

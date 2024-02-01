@@ -25,7 +25,7 @@ class ProfileControllers {
         return errResponse(404, 'ID User not found', response)
       }
 
-      successResponse(200, data, 'Success get profile', response)
+      return successResponse(200, data, 'Success get profile', response)
     } catch (error) {
       return errResponse(500, error, response)
     }
@@ -35,7 +35,6 @@ class ProfileControllers {
     try {
       const userId = req.headers.id
       const { name, address, phoneNumber } = req.body
-      
 
       const inputProfile = await User.findByPk(userId)
       if (!inputProfile) {
