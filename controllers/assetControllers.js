@@ -7,6 +7,7 @@ class AssetControllers {
     try {
       const id = req.params.id
       const data = await Asset.findOne({
+        include: [{ model: User }, { model: Recipe }],
         where: {
           id,
         },
@@ -79,11 +80,12 @@ class AssetControllers {
       let id = req.params.id
 
       const getAsset = await Asset.findAll({
-        include: Recipe,
+        include: [{ model: User }, { model: Recipe }],
         where: {
           UserId: id,
         },
       })
+
       if (!getAsset || !id) {
         return errResponse(400, 'User not found')
       }

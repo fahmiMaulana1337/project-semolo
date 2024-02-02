@@ -33,8 +33,8 @@ class ProfileControllers {
 
   static async updateProfile(req, response) {
     try {
-      const userId = req.headers.id
-      const { name, address, phoneNumber } = req.body
+      const userId = req.params.id
+      const { name, email, address, phoneNumber } = req.body
 
       const inputProfile = await User.findByPk(userId)
       if (!inputProfile) {
@@ -44,6 +44,7 @@ class ProfileControllers {
       inputProfile.name = name
       inputProfile.address = address
       inputProfile.phone_number = phoneNumber
+      inputProfile.email = email
 
       //updated profile
       inputProfile.updatedAt = new Date()

@@ -7,6 +7,6 @@ router.use(authentication)
 
 router.get('/', userControllers.getAllProfile)
 router.get('/:id', userControllers.getUserProfile)
-router.put('/', userControllers.updateProfile)
+router.put('/:id', userControllers.updateProfile)
 
 module.exports = router
