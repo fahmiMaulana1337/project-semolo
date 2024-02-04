@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer')
-const PaymentControllers = require('../controllers/paymentControllers')
+// const PaymentControllers = require('../controllers/paymentControllers')
+const cron = require('cron')
 
 function sendEmailCheckout(
   mail,

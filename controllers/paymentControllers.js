@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const { errResponse, successResponse } = require('../helpers/response')
 dotenv.config()
 const MidtransClient = require('midtrans-client')
+const cron = require('cron')
 
 class PaymentControllers {
   static async payment(req, res) {
@@ -12,7 +13,7 @@ class PaymentControllers {
       const user = await User.findByPk(id)
 
       if (!user) {
-        return errResponse(404, 'Not Authorized', res)
+        return errResponse(404, 'User not found', res)
       }
 
       const recipe = await Recipe.findOne({
@@ -39,7 +40,7 @@ class PaymentControllers {
       })
 
       const orderId =
-        'YOUR-ORDERID' + Math.floor(100000 + Math.random() * 9000000)
+        'ASSET-PAYMENT' + Math.floor(100000 + Math.random() * 9000000)
       const grossAmount = recipe.total_price
 
       let parameter = {
@@ -76,6 +77,16 @@ class PaymentControllers {
         parameter,
         midtransToken
       )
+
+      // Cronjob
+      // const cronJob = new cron.CronJob('0 0 1 * *', async () => {
+      //   console.log('Running cron job...')
+      //   sendEmailCheckout(mail, asset, recipe, user, parameter, midtransToken)
+      // })
+
+      // Mulai cron job
+      // cronJob.start()
+
       return successResponse(201, midtransToken, 'Succesfully transcation', res)
     } catch (error) {
       console.info(error)

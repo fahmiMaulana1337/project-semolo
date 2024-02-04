@@ -18,6 +18,7 @@ router.post('/request/:id', AssetControllers.requestAsset)
 
 router.use(verifyRole)
 router.get('/admin/request', AssetControllers.getRequestAsset)
-router.post('/admin/accept/:id', AssetControllers.acceptRequest)
+router.post('/admin/accept', AssetControllers.acceptRequest)
+router.delete('/admin/delete', AssetControllers.deleteAsset)
 
 module.exports = router

@@ -14,26 +14,24 @@ class AuthControllers {
     try {
       const { email, password, name, role, address, phoneNumber } = req.body
 
-      const image = req.file
-
       if (!email || !password) {
         return errResponse(400, 'email password and image must be fields', res)
       }
 
-      if (!image) {
-        return errResponse(400, 'img input cannot be null', res)
-      }
+      // if (!image) {
+      //   return errResponse(400, 'img input cannot be null', res)
+      // }
 
-      const fileType = formatType(image)
-      if (fileType) {
-        return errResponse(400, fileType, res)
-      }
-      const fileSize = formatSize(image)
-      if (fileSize) {
-        return errResponse(400, fileSize, res)
-      }
+      // const fileType = formatType(image)
+      // if (fileType) {
+      //   return errResponse(400, fileType, res)
+      // }
+      // const fileSize = formatSize(image)
+      // if (fileSize) {
+      //   return errResponse(400, fileSize, res)
+      // }
 
-      const imageAdd = image.originalname
+      // const imageAdd = image.originalname
       const getUser = await User.findOne({
         where: { email: email },
       })
@@ -51,8 +49,8 @@ class AuthControllers {
         role: role,
         name: name,
         address: address,
-        phoneNumber: phoneNumber,
-        image: imageAdd,
+        phone_number: phoneNumber,
+        image: '',
       }
 
       await User.create(createUser)

@@ -23,30 +23,30 @@ class AssetControllers {
       const user_id = req.user.id
       //input file from outside
       const { name, address, price } = req.body
-      const image = req.file
+      // const image = req.file
 
       //query find user byprimary key
 
-      if (!name || !address || !price || !image) {
+      if (!name || !address || !price) {
         return errResponse(400, 'All input cannot be null', res)
       }
 
-      const fileType = formatType(image)
-      if (fileType) {
-        return errResponse(400, fileType, res)
-      }
-      const fileSize = formatSize(image)
-      if (fileSize) {
-        return errResponse(400, fileSize, res)
-      }
+      // const fileType = formatType(image)
+      // if (fileType) {
+      //   return errResponse(400, fileType, res)
+      // }
+      // const fileSize = formatSize(image)
+      // if (fileSize) {
+      //   return errResponse(400, fileSize, res)
+      // }
 
-      const imageAdd = image.originalname
+      // const imageAdd = image.originalname
       const inputAssets = {
         user_id: user_id,
         name: name,
         address: address,
         price: price,
-        image: imageAdd,
+        image: 'default.jpg',
         rank: 0,
       }
       //register asset
@@ -65,7 +65,7 @@ class AssetControllers {
   static async getAllAsset(req, response) {
     try {
       const assets = await Asset.findAll({
-        include: User,
+        include: [{ model: User }, { model: Recipe }],
       })
       return successResponse(200, assets, 'Successfully get datas', response)
     } catch (error) {
@@ -177,7 +177,7 @@ class AssetControllers {
   }
   static async acceptRequest(req, response) {
     try {
-      const id = req.params.id
+      const id = req.body.id
 
       const now = new Date()
       const deadline = new Date(now.getFullYear(), now.getMonth() + 1, 1)
@@ -209,6 +209,27 @@ class AssetControllers {
     } catch (error) {
       console.log(error)
       response.status(500).json(error)
+    }
+  }
+
+  static async deleteAsset(req, response) {
+    try {
+      const { id } = req.body
+      const asset = await Asset.findByPk(id)
+
+      if (!asset) {
+        return errResponse(404, 'Asset not found', response)
+      }
+
+      // Hapus terlebih dahulu entitas "recipes" yang terkait dengan entitas "asset"
+      await Recipe.destroy({ where: { asset_id: id } })
+
+      // Hapus entitas "asset"
+      await Asset.destroy({ where: { id } })
+
+      return successResponse(200, asset, 'Asset deleted successfully', response)
+    } catch (error) {
+      console.log(error)
     }
   }
 }
