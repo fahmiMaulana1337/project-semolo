@@ -11,7 +11,7 @@ router.use('/auth', authRouter)
 router.use('/user', userRouter)
 router.use('/assets', assetsRouter)
 router.use('/admin/distributions', fundRouter)
-router.use('/admin/payments', paymentRouter)
+router.use('/payments', paymentRouter)
 router.use('/admin/wakafs', wakafController)
 
 module.exports = router
