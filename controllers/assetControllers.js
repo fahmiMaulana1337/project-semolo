@@ -117,13 +117,11 @@ class AssetControllers {
       if (!asset) {
         return errResponse(404, 'Assets not found', response)
       }
-
       const alreadyReq = await Recipe.findOne({
         where: {
           AssetId: asset.id,
         },
       })
-
       if (alreadyReq) {
         return errResponse(
           400,
@@ -131,14 +129,12 @@ class AssetControllers {
           response
         )
       }
-
       const newReqAsset = await Recipe.create({
         user_id: req.user.id,
         asset_id: id,
         is_active: 'waiting',
         total_price: asset.price,
       })
-
       return successResponse(
         200,
         newReqAsset,

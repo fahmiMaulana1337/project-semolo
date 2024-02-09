@@ -38,11 +38,9 @@ class PaymentControllers {
         serverKey: process.env.SERVER_KEY_MIDTRANS,
         clientKey: process.env.CLIENT_KEY_MIDTRANS,
       })
-
       const orderId =
         'ASSET-PAYMENT' + Math.floor(100000 + Math.random() * 9000000)
       const grossAmount = recipe.total_price
-
       let parameter = {
         transaction_details: {
           order_id: orderId,
@@ -65,9 +63,8 @@ class PaymentControllers {
           },
         ],
       }
-
       const midtransToken = await snap.createTransaction(parameter)
-
+      console.log(midtransToken)
       const mail = 'akunguardian2023.1@gmail.com'
       const sendEmail = sendEmailCheckout(
         mail,
@@ -84,7 +81,7 @@ class PaymentControllers {
       //   sendEmailCheckout(mail, asset, recipe, user, parameter, midtransToken)
       // })
 
-      // Mulai cron job
+      // // Mulai cron job
       // cronJob.start()
 
       return successResponse(201, midtransToken, 'Succesfully transcation', res)
@@ -96,3 +93,8 @@ class PaymentControllers {
 }
 
 module.exports = PaymentControllers
+let snap = new MidtransClient.Snap({
+  isProduction: false,
+  serverKey: process.env.SERVER_KEY_MIDTRANS,
+  clientKey: process.env.CLIENT_KEY_MIDTRANS,
+})

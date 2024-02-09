@@ -15,3 +15,4 @@ router.use('/payments', paymentRouter)
 router.use('/admin/wakafs', wakafController)
 
 module.exports = router
+

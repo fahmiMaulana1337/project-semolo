@@ -13,36 +13,16 @@ class AuthControllers {
   static async register(req, res) {
     try {
       const { email, password, name, role, address, phoneNumber } = req.body
-
       if (!email || !password) {
         return errResponse(400, 'email password and image must be fields', res)
       }
-
-      // if (!image) {
-      //   return errResponse(400, 'img input cannot be null', res)
-      // }
-
-      // const fileType = formatType(image)
-      // if (fileType) {
-      //   return errResponse(400, fileType, res)
-      // }
-      // const fileSize = formatSize(image)
-      // if (fileSize) {
-      //   return errResponse(400, fileSize, res)
-      // }
-
-      // const imageAdd = image.originalname
       const getUser = await User.findOne({
         where: { email: email },
       })
-
       if (getUser) {
         return errResponse(400, 'Email already exist', res)
       }
-
       const hashPassword = hash(password)
-      // const uploadImage = image.originalname
-
       const createUser = {
         email: email,
         password: hashPassword,
@@ -52,10 +32,8 @@ class AuthControllers {
         phone_number: phoneNumber,
         image: '',
       }
-
       await User.create(createUser)
       delete createUser.password
-
       return successResponse(201, createUser, 'Succesfully registered', res)
     } catch (error) {
       if (error.name === 'Email and Password Required') {
@@ -71,7 +49,7 @@ class AuthControllers {
   static async login(req, response) {
     try {
       const { email, password } = req.body
-      if (!email || !password) {
+      if (!email) {
         return errResponse(400, 'Email and Password Required', response)
       }
       const user = await User.findOne({
